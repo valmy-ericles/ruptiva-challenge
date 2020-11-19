@@ -1,6 +1,6 @@
 module V1
   class UsersController < ApiController
-    before_action :load_user, only: %i[show update]
+    before_action :load_user, only: %i[show update destroy]
 
     def index
       @users = User.all
@@ -11,6 +11,11 @@ module V1
     def update
       @user.attributes = user_params
       save_user!
+    end
+
+    def destroy
+      @user.for_trash
+      head :no_content
     end
 
     private

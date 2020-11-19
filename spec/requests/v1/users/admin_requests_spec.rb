@@ -79,5 +79,48 @@ RSpec.describe 'V1::Users as :admin', type: :request do
       end
     end
 
+    context 'with invalid params' do
+      let(:user_invalid_params) do
+        { user: attributes_for(:user, first_name: nil) }.to_json
+      end
+
+      it 'does not update User' do
+        old_first_name = user.first_name
+        patch url, headers: auth_header(user), params: user_invalid_params
+        user.reload
+        expect(user.first_name).to eq old_first_name
+      end
+
+      it 'returns error messages' do
+        patch url, headers: auth_header(user), params: user_invalid_params
+        expect(body_json['errors']['fields']).to have_key('first_name')
+      end
+
+      it 'returns unprocessable_entity status' do
+        patch url, headers: auth_header(user), params: user_invalid_params
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+    end
+
+    context 'DELETE /users/:id' do
+      let!(:user) { create(:user) }
+      let(:url) { "/v1/users/#{user.id}" }
+
+      it 'removes User' do
+        delete url, headers: auth_header(user)
+        expect(User.find_by(id: user.id)).to be_nil
+        expect(User.in_the_trash.find_by(id: user.id)).to be_truthy
+      end
+
+      it 'returns success status' do
+        delete url, headers: auth_header(user)
+        expect(response).to have_http_status(:no_content)
+      end
+
+      it 'does not return any body content' do
+        delete url, headers: auth_header(user)
+        expect(body_json).to_not be_present
+      end
+    end
   end
 end
