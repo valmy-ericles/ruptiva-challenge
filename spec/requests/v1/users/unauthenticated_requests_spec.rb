@@ -10,7 +10,7 @@ RSpec.describe 'V1::Users as without authentication', type: :request do
     include_examples 'unauthenticated access'
   end
 
-  context 'SHOW /user' do
+  context 'SHOW /user/:id' do
     let!(:user) { create(:user) }
     let(:url) { "/v1/users/#{user.id}" }
 

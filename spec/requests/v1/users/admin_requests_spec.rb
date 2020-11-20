@@ -21,13 +21,13 @@ RSpec.describe 'V1::Users as :admin', type: :request do
                                                                    ]))
     end
 
-    it 'Returns success status' do
+    it 'returns success status' do
       get url, headers: auth_header(user)
       expect(response).to have_http_status(:ok)
     end
   end
 
-  context 'SHOW /user' do
+  context 'SHOW /user/:id' do
     let!(:user) { create(:user) }
     let(:url) { "/v1/users/#{user.id}" }
 
@@ -43,13 +43,13 @@ RSpec.describe 'V1::Users as :admin', type: :request do
                                                    ]))
     end
 
-    it 'Returns success status' do
+    it 'returns success status' do
       get url, headers: auth_header(user)
       expect(response).to have_http_status(:ok)
     end
   end
 
-  context 'PATCH /user' do
+  context 'PATCH /users/:id' do
     let(:user) { create(:user) }
     let(:url) { "/v1/users/#{user.id}" }
 
@@ -59,7 +59,7 @@ RSpec.describe 'V1::Users as :admin', type: :request do
 
       let(:user_params) { { user: { first_name: new_first_name, last_name: new_last_name } }.to_json }
 
-      it 'updates User' do
+      it 'updates user' do
         patch url, headers: auth_header(user), params: user_params
         user.reload
         expect(user.first_name).to eq new_first_name
@@ -84,7 +84,7 @@ RSpec.describe 'V1::Users as :admin', type: :request do
         { user: attributes_for(:user, first_name: nil) }.to_json
       end
 
-      it 'does not update User' do
+      it 'does not update user' do
         old_first_name = user.first_name
         patch url, headers: auth_header(user), params: user_invalid_params
         user.reload
@@ -107,7 +107,7 @@ RSpec.describe 'V1::Users as :admin', type: :request do
     let!(:user) { create(:user) }
     let(:url) { "/v1/users/#{user.id}" }
 
-    it 'removes User' do
+    it 'removes user' do
       delete url, headers: auth_header(user)
       expect(User.find_by(id: user.id)).to be_nil
       expect(User.in_the_trash.find_by(id: user.id)).to be_truthy
