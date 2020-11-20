@@ -15,4 +15,7 @@ Execute o seguinte comando para instalar as gems
 
 No terminal, execute:
 * rails s
+
+# Pré-requisitos
+* ruby versão 2.7.1
  
