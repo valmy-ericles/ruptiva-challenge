@@ -16,9 +16,16 @@ gem 'devise_token_auth', '~> 1.1.4'
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
-  gem 'factory_bot_rails'
-  gem 'faker'
+
   gem 'rspec-rails', '~> 4.0.1'
+
+  # fixtures replacement with a straightforward definition syntax
+  gem 'factory_bot_rails'
+
+  # Generate Faker names for tests and seeds
+  gem 'faker'
+
+  # Shoulda Matchers provides RSpec- and Minitest-compatible one-liners to test common Rails functionality
   gem 'shoulda-matchers', '~> 4.0'
 end
 
