@@ -1,24 +1,17 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Como rodar a aplicação.
 
-Things you may want to cover:
+No terminal, execute:
 
-* Ruby version
+  git clone git@github.com:valmy-ericles/ruptiva-challenge.git
 
-* System dependencies
+Entre na pasta do projeto
+  cd ruptiva-challenge
 
-* Configuration
+Execute o seguinte comando para instalar as gems
+  bundle install
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+No terminal, execute:
+  rails s
+ 
