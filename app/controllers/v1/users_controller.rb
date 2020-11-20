@@ -20,9 +20,9 @@ module V1
 
     def destroy
       @user.for_trash
-      head :no_content
-
       authorize @user
+
+      head :no_content
     end
 
     private

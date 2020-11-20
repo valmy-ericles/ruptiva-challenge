@@ -18,4 +18,22 @@ RSpec.describe 'V1::Users as without authentication', type: :request do
 
     include_examples 'unauthenticated access'
   end
+
+  context 'PATCH /user/:id' do
+    let!(:user) { create(:user) }
+    let(:url) { "/v1/users/#{user.id}" }
+
+    before(:each) { get url }
+
+    include_examples 'unauthenticated access'
+  end
+
+  context 'DELETE /user/:id' do
+    let!(:user) { create(:user) }
+    let(:url) { "/v1/users/#{user.id}" }
+
+    before(:each) { delete url }
+
+    include_examples 'unauthenticated access'
+  end
 end
