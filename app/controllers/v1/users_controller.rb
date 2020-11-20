@@ -1,24 +1,35 @@
 module V1
   class UsersController < ApiController
     before_action :load_user, only: %i[show update destroy]
+    rescue_from Pundit::NotAuthorizedError, with: :unauthorized
 
     def index
       @users = User.all
+      authorize @users
     end
 
-    def show; end
+    def show
+      authorize @user
+    end
 
     def update
       @user.attributes = user_params
+      authorize @user
       save_user!
     end
 
     def destroy
       @user.for_trash
       head :no_content
+
+      authorize @user
     end
 
     private
+
+    def unauthorized
+      render_errors(message: 'Forbidden access', status: :forbidden)
+    end
 
     def load_user
       @user = User.find(params[:id])

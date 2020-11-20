@@ -101,26 +101,26 @@ RSpec.describe 'V1::Users as :admin', type: :request do
         expect(response).to have_http_status(:unprocessable_entity)
       end
     end
+  end
 
-    context 'DELETE /users/:id' do
-      let!(:user) { create(:user) }
-      let(:url) { "/v1/users/#{user.id}" }
+  context 'DELETE /users/:id' do
+    let!(:user) { create(:user) }
+    let(:url) { "/v1/users/#{user.id}" }
 
-      it 'removes User' do
-        delete url, headers: auth_header(user)
-        expect(User.find_by(id: user.id)).to be_nil
-        expect(User.in_the_trash.find_by(id: user.id)).to be_truthy
-      end
+    it 'removes User' do
+      delete url, headers: auth_header(user)
+      expect(User.find_by(id: user.id)).to be_nil
+      expect(User.in_the_trash.find_by(id: user.id)).to be_truthy
+    end
 
-      it 'returns success status' do
-        delete url, headers: auth_header(user)
-        expect(response).to have_http_status(:no_content)
-      end
+    it 'returns success status' do
+      delete url, headers: auth_header(user)
+      expect(response).to have_http_status(:no_content)
+    end
 
-      it 'does not return any body content' do
-        delete url, headers: auth_header(user)
-        expect(body_json).to_not be_present
-      end
+    it 'does not return any body content' do
+      delete url, headers: auth_header(user)
+      expect(body_json).to_not be_present
     end
   end
 end
