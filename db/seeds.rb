@@ -1,12 +1,12 @@
 puts "add a root admin"
 
 User.create!(
-  first_name: 'admin', 
-  last_name: 'admin',
-  email: 'admin@admin.com',
+  first_name: 'Maikel', 
+  last_name: 'Bald',
+  email: 'maikel@ruptiva.com',
+  password: 'ilikeruptiva',
+  password_confirmation: 'ilikeruptiva',
   role: :admin,
-  password: 'admin12345678',
-  password_confirmation: 'admin12345678',
 )
 
 puts "root admin added"
